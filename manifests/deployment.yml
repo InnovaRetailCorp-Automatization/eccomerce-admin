@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: innovaecommerceadmin 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: innovaecommerceadmin
+  template:
+    metadata:
+      labels:
+        app: innovaecommerceadmin 
+    spec:
+      containers:
+        - name: innovaecommerceadmin 
+          image: innovacr.azurecr.io/innovaecommerceadmin
+          ports:
+          - containerPort: 3000
