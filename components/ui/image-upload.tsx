@@ -34,7 +34,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   if (!isMounted) {
     return null;
   }
-
+ 
   return ( 
     <div>
       <div className="mb-4 flex items-center gap-4">
@@ -54,7 +54,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           </div>
         ))}
       </div>
-      <CldUploadWidget onUpload={onUpload} uploadPreset="or44hamp">
+      <CldUploadWidget onUpload={onUpload} uploadPreset="e2wxzg4y">
         {({ open }) => {
           const onClick = () => {
             open();

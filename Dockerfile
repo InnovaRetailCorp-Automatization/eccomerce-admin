@@ -1,13 +1,11 @@
-FROM node:20.3.1-alpine
+FROM node:20.5.1-alpine
 RUN mkdir -p /app
 WORKDIR /app
 COPY . .
 RUN npm cache clean --force
-RUN npm install cloudinary --force
-RUN npm install @prisma/client
-RUN npm install stripe
+RUN npm install
 RUN npx prisma generate
+RUN npm install cloudinary
+RUN npm run build
 EXPOSE 3000
-CMD ["npm", "run" ,"dev"]
-
-
+ENTRYPOINT ["sh", "start.sh"]
