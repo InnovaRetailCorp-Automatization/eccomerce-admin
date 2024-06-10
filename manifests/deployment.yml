@@ -67,7 +67,7 @@ spec:
                   name: azure-keyvault-secrets
                   key: CLOUDINARY-PRESET-NAME
             - name: FRONTEND_STORE_URL
-              value: "http://http://57.152.15.62:3001"
+              value: "http://57.152.15.62:3001"
             - name: STRIPE_API_KEY
               valueFrom:
                 secretKeyRef:
