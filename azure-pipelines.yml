@@ -69,6 +69,6 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           az aks get-credentials --resource-group innova-rg --name innova-aks
-          kubectl apply -f eccomerce-admin/manifests/deployment.yaml
-          kubectl apply -f eccomerce-admin/manifests/service.yaml
+          kubectl apply -f eccomerce-admin/manifests/deployment.yml
+          kubectl apply -f eccomerce-admin/manifests/service.yml
       displayName: Deploy to AKS
