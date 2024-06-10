@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ecommerce-admin
-          image: innovacr.azurecr.io/ecommerce-admin
+          image: innovacr.azurecr.io/ecommerce-admin:15
           ports:
             - containerPort: 3000
           env:
