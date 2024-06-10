@@ -59,7 +59,7 @@ stages:
     - script: |
         git clone https://github.com/InnovaRetailCorp-Automatization/eccomerce-admin.git
         cd eccomerce-admin/manifests
-        sed -i 's/image: innovacr.azurecr.io\/ecommerce-admin:.*/image: innovacr.azurecr.io\/ecommerce-admin:$(tag)/' deployment.yaml
+        sed -i 's/image: innovacr.azurecr.io\/ecommerce-admin:.*/image: innovacr.azurecr.io\/ecommerce-admin:$(tag)/' deployment.yml
       displayName: Clone repository and update local YAML
 
     - task: AzureCLI@2
