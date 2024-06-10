@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ecommerce-admin
-          image: innovacr.azurecr.io/ecommerceadmin
+          image: innovacr.azurecr.io/ecommerce-admin
           ports:
             - containerPort: 3000
           env:
@@ -67,7 +67,7 @@ spec:
                   name: azure-keyvault-secrets
                   key: CLOUDINARY-PRESET-NAME
             - name: FRONTEND_STORE_URL
-              value: "http://ecommerce-store:3001"
+              value: "http://http://48.216.169.91:3001"
             - name: STRIPE_API_KEY
               valueFrom:
                 secretKeyRef:
