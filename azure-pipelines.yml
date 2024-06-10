@@ -24,7 +24,8 @@ stages:
   jobs:
   - job: Build
     displayName: Build
-    pool: MySelfHosted
+    pool:
+      name: MySelfHosted  # Cambiar por el nombre correcto de tu pool
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -42,31 +43,32 @@ stages:
 - stage: Deploy
   displayName: Deploy stage
   dependsOn: Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
   jobs:
-  - deployment: Deploy
+  - job: Deploy
     displayName: Deploy
-    pool: MySelfHosted
-    environment: 'InnovaRetailCorpAutomatizationeccomerceadmin.ecommerce'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: KubernetesManifest@0
-            displayName: Create imagePullSecret
-            inputs:
-              action: createSecret
-              secretName: $(imagePullSecret)
-              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+    pool:
+      name: MySelfHosted  # Cambiar por el nombre correcto de tu pool
+    steps:
+    - script: |
+        sudo apt-get update
+        sudo apt-get install -y git
+      displayName: Install Git
 
-          - task: KubernetesManifest@0
-            displayName: Deploy to Kubernetes cluster
-            inputs:
-              action: deploy
-              manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
-              imagePullSecrets: |
-                $(imagePullSecret)
-              containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
+    - script: |
+        git clone https://github.com/InnovaRetailCorp-Automatization/eccomerce-admin.git
+        cd eccomerce-admin/manifests
+        sed -i 's/image: innovacr.azurecr.io\/ecommerce-admin:.*/image: innovacr.azurecr.io\/ecommerce-admin:$(tag)/' deployment.yaml
+      displayName: Clone repository and update local YAML
+
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'azure-students'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az aks get-credentials --resource-group innova-rg --name innova-aks
+          kubectl apply -f eccomerce-admin/manifests/deployment.yaml
+          kubectl apply -f eccomerce-admin/manifests/service.yaml
+      displayName: Deploy to AKS
