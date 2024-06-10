@@ -12,7 +12,7 @@ variables:
 
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'a90b0f71-0df1-462b-9b91-9af438cbfd03'
-  imageRepository: 'ecommerceadmin'
+  imageRepository: 'ecommerce-admin'
   containerRegistry: 'innovacr.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
